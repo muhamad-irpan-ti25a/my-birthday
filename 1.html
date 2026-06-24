@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun Untukku</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .serif { font-family: 'Playfair Display', serif; }
+        /* Animasi fade in halus */
+        .fade-in { animation: fadeIn 2s ease-in-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col justify-between selection:bg-zinc-800 selection:text-zinc-200 overflow-x-hidden">
+
+    <audio id="bg-music" loop>
+        <source src="monokrom.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="music-overlay" class="fixed inset-0 bg-zinc-950 z-50 flex flex-col items-center justify-center transition-opacity duration-1000">
+        <div class="text-center p-6 max-w-md">
+            <h2 class="serif text-3xl md:text-4xl mb-4 text-zinc-300 italic">"Lembaran foto hitam putih..."</h2>
+            <p class="text-zinc-500 text-sm mb-8 tracking-wide">Nyalakan suara untuk pengalaman penuh</p>
+            <button onclick="startCelebration()" class="px-8 py-3 border border-zinc-700 bg-zinc-900 text-zinc-200 hover:bg-zinc-100 hover:text-zinc-950 transition-all duration-300 rounded-full tracking-widest text-xs uppercase cursor-pointer shadow-lg">
+                Buka Ucapan
+            </button>
+        </div>
+    </div>
+
+    <header class="p-6 md:p-8 flex justify-between items-center z-10">
+        <span class="serif text-xl font-bold tracking-wider opacity-60">HBD.</span>
+        <button id="music-toggle" onclick="toggleMusic()" class="hidden text-xs tracking-widest uppercase border border-zinc-800 px-4 py-2 rounded-full hover:bg-zinc-900 transition-all cursor-pointer">
+            🎵 Pause
+        </button>
+    </header>
+
+    <main class="flex-grow flex items-center justify-center px-6 py-12">
+        <div id="main-content" class="max-w-2xl text-center opacity-0 transition-opacity duration-1000">
+            <p class="text-zinc-500 uppercase tracking-[0.2em] text-xs md:text-sm mb-4">A Milestone Journey</p>
+            <h1 class="serif text-5xl md:text-7xl font-bold tracking-tight mb-8 leading-tight text-zinc-100">
+                Selamat Ulang Tahun <br><span class="italic font-normal text-zinc-400">Untuk Diriku.</span>
+            </h1>
+            
+            <div class="w-12 h-[1px] bg-zinc-700 mx-auto mb-8"></div>
+
+            <div class="space-y-6 text-zinc-400 font-light leading-relaxed text-base md:text-lg max-w-xl mx-auto text-justify md:text-center">
+                <p>
+                    Terima kasih sudah bertahan sejauh ini. Terima kasih tetap melangkah meski jalan tidak selalu mudah, dan tetap memilih untuk tumbuh di setiap keadaan.
+                </p>
+                <p>
+                    Hari ini adalah pembuktian bahwa kamu kuat. Semoga di usia yang baru ini, langkahmu makin mantap, hatimu makin lapang, dan setiap usaha yang kamu rakit bermuara pada bahagia. Kamu berharga, hari ini dan seterusnya.
+                </p>
+            </div>
+
+            <div class="mt-12">
+                <button onclick="makeWish()" class="text-xs tracking-widest uppercase text-zinc-500 hover:text-zinc-200 transition-colors duration-300 underline underline-offset-8 decoration-zinc-700 cursor-pointer">
+                    [ Tiup Lilin & Tulis Harapan ]
+                </button>
+                <p id="wish-display" class="mt-4 text-sm italic text-zinc-500 transition-all duration-500"></p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="p-6 text-center text-xs text-zinc-600 tracking-wider">
+        Dibuat dengan bangga oleh & untuk diriku sendiri © 2026
+    </footer>
+
+    <script>
+        const music = document.getElementById('bg-music');
+        const overlay = document.getElementById('music-overlay');
+        const content = document.getElementById('main-content');
+        const toggleBtn = document.getElementById('music-toggle');
+
+        // Fungsi untuk memulai web (memutar musik & menampilkan konten)
+        function startCelebration() {
+            // Putar audio
+            music.play().catch(error => console.log("Playback dicegah oleh browser:", error));
+            
+            // Hilangkan overlay
+            overlay.classList.add('opacity-0');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                // Tampilkan konten utama dengan animasi
+                content.classList.remove('opacity-0');
+                content.classList.add('fade-in');
+                toggleBtn.classList.remove('hidden');
+            }, 1000);
+        }
+
+        // Fungsi untuk Play/Pause Musik
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                toggleBtn.innerText = "🎵 Pause";
+            } else {
+                music.pause();
+                toggleBtn.innerText = "🔇 Play";
+            }
+        }
+
+        // Fungsi interaktif membuat harapan
+        function makeWish() {
+            const wish = prompt("Tuliskan harapan terbesarmu untuk usia baru ini:");
+            const display = document.getElementById('wish-display');
+            if (wish) {
+                display.innerText = `Harapanmu telah disimpan di semesta: "${wish}" ✨`;
+                display.classList.remove('text-zinc-500');
+                display.classList.add('text-zinc-300');
+            }
+        }
+    </script>
+</body>
+</html>

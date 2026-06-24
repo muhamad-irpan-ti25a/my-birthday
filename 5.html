@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun Untukku</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Menggunakan Courier Prime untuk kesan mesin tik kuno) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .serif { font-family: 'Playfair Display', serif; }
+        .mono { font-family: 'Courier Prime', monospace; }
+        
+        /* Animasi Transisi Konten Utama */
+        .fade-in { animation: fadeIn 2s ease-in-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Animasi Muncul Lembut untuk Jejak Kata di Background */
+        @keyframes pulseText {
+            0%, 100% { opacity: 0; transform: scale(0.95); }
+            10%, 90% { opacity: 0.04; transform: scale(1); }
+        }
+        .bg-phrase { animation: pulseText 12s ease-in-out infinite; opacity: 0; }
+    </style>
+</head>
+<!-- h-screen & overflow-hidden mengunci total halaman agar FIX tidak bisa di-scroll -->
+<body class="bg-zinc-950 text-zinc-100 h-screen overflow-hidden relative selection:bg-zinc-800 flex flex-col justify-between">
+
+    <!-- Audio Element -->
+    <audio id="bg-music" loop>
+        <source src="monokrom.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- 1. OVERLAY PEMBUKA -->
+    <div id="music-overlay" class="fixed inset-0 bg-zinc-950 z-50 flex flex-col items-center justify-center transition-opacity duration-1000">
+        <div class="text-center p-6 max-w-md">
+            <h2 class="serif text-3xl md:text-4xl mb-4 text-zinc-300 italic">"Lembaran foto hitam putih..."</h2>
+            <p class="text-zinc-500 text-xs mb-8 tracking-widest uppercase">Nyalakan suara untuk pengalaman penuh</p>
+            <button onclick="startCelebration()" class="px-8 py-3 border border-zinc-800 bg-zinc-900/50 text-zinc-300 hover:bg-zinc-100 hover:text-zinc-950 transition-all duration-500 rounded-full tracking-widest text-xs uppercase cursor-pointer backdrop-blur-sm">
+                Buka Lembaran Cerita
+            </button>
+        </div>
+    </div>
+
+    <!-- 2. BACKGROUND: TYPED LEGACY (Jejak Kata Kenangan Samar) -->
+    <div id="text-bg" class="absolute inset-0 z-0 hidden pointer-events-none select-none mono text-[10px] md:text-xs tracking-wider text-zinc-400">
+        <!-- Kamu bisa bebas mengganti teks frasa di bawah ini sesuai kenangan/hal sederhana favoritmu -->
+        <div class="absolute top-[15%] left-[8%] bg-phrase" style="animation-delay: 0s;">[ Aroma hujan di sore hari ]</div>
+        <div class="absolute top-[25%] right-[12%] bg-phrase" style="animation-delay: 3s;">[ Lagu favorit yang diputar berulang kali ]</div>
+        <div class="absolute bottom-[30%] left-[5%] bg-phrase" style="animation-delay: 6s;">[ Sudut kamar dan tumpukan buku ]</div>
+        <div class="absolute bottom-[18%] right-[10%] bg-phrase" style="animation-delay: 9s;">[ Secangkir kopi yang mulai mendingin ]</div>
+        <div class="absolute top-[45%] left-[15%] bg-phrase" style="animation-delay: 4.5s;">[ Berjalan sendiri menyusuri jalan panjang ]</div>
+        <div class="absolute bottom-[45%] right-[8%] bg-phrase" style="animation-delay: 1.5s;">[ Langit malam yang selalu mendengarkan ]</div>
+    </div>
+
+    <!-- 3. KONTEN UTAMA LAYER (Kotak Teks Ucapan) -->
+    <header class="p-6 md:p-8 flex justify-between items-center z-10 w-full">
+        <span class="serif text-xl font-bold tracking-wider opacity-40">HBD.</span>
+        <button id="music-toggle" onclick="toggleMusic()" class="hidden text-xs tracking-widest uppercase border border-zinc-800 bg-zinc-950/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-zinc-900 transition-all cursor-pointer">
+            🎵 Pause
+        </button>
+    </header>
+
+    <main class="flex-grow flex items-center justify-center px-4 z-10 w-full">
+        <div id="main-content" class="w-full max-w-xl text-center opacity-0 transition-opacity duration-1000 bg-zinc-950/20 p-6 md:p-10 rounded-2xl backdrop-blur-md border border-zinc-900/30 shadow-2xl mx-auto">
+            <p class="text-zinc-500 uppercase tracking-[0.25em] text-[10px] md:text-xs mb-3">A Milestone Journey</p>
+            
+            <!-- Efek Mengetik Otomatis Pada Judul -->
+            <h1 class="serif text-3xl md:text-5xl font-bold tracking-tight mb-6 leading-tight text-zinc-100 min-h-[70px] md:min-h-[120px]">
+                <span id="typing-text"></span><span class="animate-pulse font-light text-zinc-500">|</span>
+            </h1>
+            
+            <div class="w-10 h-[1px] bg-zinc-800 mx-auto mb-6"></div>
+
+            <div class="space-y-4 text-zinc-400 font-light leading-relaxed text-sm md:text-base text-justify md:text-center">
+                <p>
+                    Terima kasih sudah bertahan sejauh ini. Terima kasih tetap melangkah meski jalan tidak selalu mudah, dan tetap memilih untuk tumbuh di setiap keadaan.
+                </p>
+                <p>
+                    Hari ini adalah pembuktian bahwa kamu kuat. Semoga di usia yang baru ini, langkahmu makin mantap, hatimu makin lapang, dan setiap usaha yang kamu rakit bermuara pada bahagia. Kamu berharga, hari ini dan seterusnya.
+                </p>
+            </div>
+
+            <!-- Interaktif: Tiup Lilin -->
+            <div class="mt-8">
+                <button onclick="makeWish()" class="text-[11px] tracking-widest uppercase text-zinc-500 hover:text-zinc-200 transition-colors duration-300 underline underline-offset-8 decoration-zinc-800 cursor-pointer">
+                    [ Tiup Lilin & Tulis Harapan ]
+                </button>
+                <p id="wish-display" class="mt-4 text-xs italic text-zinc-400 transition-all duration-500 max-w-sm mx-auto"></p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="p-6 text-center text-[10px] text-zinc-600 tracking-wider z-10 w-full">
+        Dibuat dengan bangga oleh & untuk diriku sendiri © 2026
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        const music = document.getElementById('bg-music');
+        const overlay = document.getElementById('music-overlay');
+        const content = document.getElementById('main-content');
+        const textBg = document.getElementById('text-bg');
+        const toggleBtn = document.getElementById('music-toggle');
+
+        // Pengaturan Efek Mengetik Judul Utama
+        const titleString = "Selamat Ulang Tahun\nUntuk Diriku.";
+        let i = 0;
+        
+        function typeWriter() {
+            if (i < titleString.length) {
+                const char = titleString.charAt(i);
+                // Menangani baris baru (\n) pada HTML
+                if (char === '\n') {
+                    document.getElementById("typing-text").innerHTML += "<br>";
+                } else {
+                    document.getElementById("typing-text").innerHTML += char;
+                }
+                i++;
+                setTimeout(typeWriter, 80); // Kecepatan mengetik per karakter (milidetik)
+            }
+        }
+
+        function startCelebration() {
+            music.play().catch(error => console.log("Playback diblokir browser:", error));
+            
+            overlay.classList.add('opacity-0');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                textBg.classList.remove('hidden');
+                content.classList.remove('opacity-0');
+                content.classList.add('fade-in');
+                toggleBtn.classList.remove('hidden');
+                
+                // Jalankan efek mengetik setelah konten utama muncul
+                typeWriter();
+            }, 1000);
+        }
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                toggleBtn.innerText = "🎵 Pause";
+            } else {
+                music.pause();
+                toggleBtn.innerText = "🔇 Play";
+            }
+        }
+
+        function makeWish() {
+            const wish = prompt("Tuliskan harapan terbesarmu untuk usia baru ini:");
+            const display = document.getElementById('wish-display');
+            if (wish) {
+                display.style.opacity = 0;
+                setTimeout(() => {
+                    display.innerText = `Harapanmu telah ditiupkan ke semesta: "${wish}" 🕯️✨`;
+                    display.style.opacity = 1;
+                }, 300);
+            }
+        }
+    </script>
+</body>
+</html>

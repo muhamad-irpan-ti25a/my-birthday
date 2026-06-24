@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun Untukku</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .serif { font-family: 'Playfair Display', serif; }
+        
+        /* Animasi Konten Utama */
+        .fade-in { animation: fadeIn 2s ease-in-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Animasi Scroll Tak Terbatas untuk Polaroid Wall */
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: scroll 40s linear infinite;
+        }
+        /* Pause scroll saat kursor di atas foto agar bisa dilihat jelas */
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col justify-between overflow-x-hidden relative selection:bg-zinc-800">
+
+    <!-- Audio Element -->
+    <audio id="bg-music" loop>
+        <source src="monokrom.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- 1. OVERLAY PEMBUKA (Gerbang Masuk) -->
+    <div id="music-overlay" class="fixed inset-0 bg-zinc-950 z-50 flex flex-col items-center justify-center transition-opacity duration-1000">
+        <div class="text-center p-6 max-w-md">
+            <h2 class="serif text-3xl md:text-4xl mb-4 text-zinc-300 italic">"Lembaran foto hitam putih..."</h2>
+            <p class="text-zinc-500 text-xs mb-8 tracking-widest uppercase">Nyalakan suara untuk pengalaman penuh</p>
+            <button onclick="startCelebration()" class="px-8 py-3 border border-zinc-800 bg-zinc-900/50 text-zinc-300 hover:bg-zinc-100 hover:text-zinc-950 transition-all duration-500 rounded-full tracking-widest text-xs uppercase cursor-pointer backdrop-blur-sm">
+                Buka Lembaran Cerita
+            </button>
+        </div>
+    </div>
+
+    <!-- 2. BACKGROUND: POLAROID WALL (Mengalir Perlahan di Belakang) -->
+    <div id="polaroid-bg" class="absolute inset-0 opacity-15 pointer-events-auto z-0 overflow-hidden flex flex-col justify-center space-y-8 select-none mix-blend-luminosity hidden">
+        
+        <!-- Baris 1: Bergerak ke Kiri -->
+        <div class="animate-marquee">
+            <!-- Isi Foto (Diulang 2x agar scroll tidak putus/patah) -->
+            <div class="flex space-x-8 px-4">
+                <!-- Polaroid 1 -->
+                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-3 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=300&q=80" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90" alt="Momen">
+                    <p class="serif text-center text-xs mt-3 italic opacity-75">Jalan panjang</p>
+                </div>
+                <!-- Polaroid 2 -->
+                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-2 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=300&q=80" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90" alt="Momen">
+                    <p class="serif text-center text-xs mt-3 italic opacity-75">Sudut teduh</p>
+                </div>
+                <!-- Polaroid 3 -->
+                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-6 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=300&q=80" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90" alt="Momen">
+                    <p class="serif text-center text-xs mt-3 italic opacity-75">Langit sore itu</p>
+                </div>
+                <!-- Polaroid 4 -->
+                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-4 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=300&q=80" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90" alt="Momen">
+                    <p class="serif text-center text-xs mt-3 italic opacity-75">Bertumbuh sendiri</p>
+                </div>
+            </div>
+            <!-- Duplikasi Baris 1 -->
+            <div class="flex space-x-8 px-4" aria-hidden="true">
+                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-3 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=300&q=80" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90" alt="Momen">
+                    <p class="serif text-center text-xs mt-3 italic opacity-75">Jalan panjang</p>
+                </div>
+                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-2 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=300&q=80" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90" alt="Momen">
+                    <p class="serif text-center text-xs mt-3 italic opacity-75">Sudut teduh</p>
+                </div>
+                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-6 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=300&q=80" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90" alt="Momen">
+                    <p class="serif text-center text-xs mt-3 italic opacity-75">Langit sore itu</p>
+                </div>
+                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-4 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=300&q=80" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90" alt="Momen">
+                    <p class="serif text-center text-xs mt-3 italic opacity-75">Bertumbuh sendiri</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. KONTEN UTAMA LAYER -->
+    <header class="p-6 md:p-8 flex justify-between items-center z-10">
+        <span class="serif text-xl font-bold tracking-wider opacity-40">HBD.</span>
+        <button id="music-toggle" onclick="toggleMusic()" class="hidden text-xs tracking-widest uppercase border border-zinc-800 bg-zinc-950/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-zinc-900 transition-all cursor-pointer">
+            🎵 Pause
+        </button>
+    </header>
+
+    <main class="flex-grow flex items-center justify-center px-6 py-12 z-10">
+        <div id="main-content" class="max-w-2xl text-center opacity-0 transition-opacity duration-1000 bg-zinc-950/60 p-8 md:p-12 rounded-2xl backdrop-blur-md border border-zinc-900/50 shadow-2xl">
+            <p class="text-zinc-500 uppercase tracking-[0.25em] text-xs mb-4">A Milestone Journey</p>
+            <h1 class="serif text-4xl md:text-6xl font-bold tracking-tight mb-8 leading-tight text-zinc-100">
+                Selamat Ulang Tahun <br><span class="italic font-normal text-zinc-400">Untuk Diriku.</span>
+            </h1>
+            
+            <div class="w-12 h-[1px] bg-zinc-800 mx-auto mb-8"></div>
+
+            <div class="space-y-6 text-zinc-400 font-light leading-relaxed text-base md:text-lg max-w-xl mx-auto text-justify md:text-center">
+                <p>
+                    Terima kasih sudah bertahan sejauh ini. Terima kasih tetap melangkah meski jalan tidak selalu mudah, dan tetap memilih untuk tumbuh di setiap keadaan.
+                </p>
+                <p>
+                    Hari ini adalah pembuktian bahwa kamu kuat. Semoga di usia yang baru ini, langkahmu makin mantap, hatimu makin lapang, dan setiap usaha yang kamu rakit bermuara pada bahagia. Kamu berharga, hari ini dan seterusnya.
+                </p>
+            </div>
+
+            <!-- Interaktif: Tiup Lilin -->
+            <div class="mt-12">
+                <button onclick="makeWish()" class="text-xs tracking-widest uppercase text-zinc-500 hover:text-zinc-200 transition-colors duration-300 underline underline-offset-8 decoration-zinc-800 cursor-pointer">
+                    [ Tiup Lilin & Tulis Harapan ]
+                </button>
+                <p id="wish-display" class="mt-6 text-sm italic text-zinc-400 transition-all duration-500 max-w-sm mx-auto"></p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="p-6 text-center text-xs text-zinc-600 tracking-wider z-10">
+        Dibuat dengan bangga oleh & untuk diriku sendiri © 2026
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        const music = document.getElementById('bg-music');
+        const overlay = document.getElementById('music-overlay');
+        const content = document.getElementById('main-content');
+        const polaroidBg = document.getElementById('polaroid-bg');
+        const toggleBtn = document.getElementById('music-toggle');
+
+        function startCelebration() {
+            music.play().catch(error => console.log("Playback diblokir browser:", error));
+            
+            overlay.classList.add('opacity-0');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                
+                // Munculkan background polaroid dan konten utama secara elegan
+                polaroidBg.classList.remove('hidden');
+                content.classList.remove('opacity-0');
+                content.classList.add('fade-in');
+                toggleBtn.classList.remove('hidden');
+            }, 1000);
+        }
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                toggleBtn.innerText = "🎵 Pause";
+            } else {
+                music.pause();
+                toggleBtn.innerText = "🔇 Play";
+            }
+        }
+
+        function makeWish() {
+            const wish = prompt("Tuliskan harapan terbesarmu untuk usia baru ini:");
+            const display = document.getElementById('wish-display');
+            if (wish) {
+                display.style.opacity = 0;
+                setTimeout(() => {
+                    display.innerText = `Harapanmu telah ditiupkan ke semesta: "${wish}" 🕯️✨`;
+                    display.style.opacity = 1;
+                }, 300);
+            }
+        }
+    </script>
+</body>
+</html>

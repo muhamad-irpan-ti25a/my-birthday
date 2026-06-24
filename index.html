@@ -1,418 +1,1157 @@
-<!DOCTYPE html>
+<!doctype html>
+
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Selamat Ulang Tahun Untukku</title>
+
     <!-- Tailwind CSS CDN -->
+
     <script src="https://cdn.tailwindcss.com"></script>
+
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .serif { font-family: 'Playfair Display', serif; }
-        .mono { font-family: 'Courier Prime', monospace; }
-        
-        /* Animasi Transisi Konten Utama (Murni Fade In, Tanpa Muncul dari Bawah) */
-        .fade-in { animation: fadeIn 2s ease-in-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      body {
+        font-family: "Inter", sans-serif;
+      }
 
-        /* --- LOGIKA ANIMASI RUNNING FOTO MARQUEE --- */
-        .marquee-container {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            opacity: 0.12; /* Langsung disetel terlihat transparan estetik */
+      .serif {
+        font-family: "Playfair Display", serif;
+      }
+
+      .mono {
+        font-family: "Courier Prime", monospace;
+      }
+
+      /* Animasi Transisi Konten Utama */
+
+      .fade-in {
+        animation: fadeIn 2s ease-in-out forwards;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* --- FIX LOGIKA ANIMASI MARQUEE AGAR PASTI MUNCUL DI HP --- */
+
+      .marquee-container {
+        position: absolute;
+
+        inset: 0;
+
+        width: 100%;
+
+        height: 100%;
+
+        overflow: hidden;
+
+        display: flex;
+
+        align-items: center;
+
+        opacity: 0.25; /* Dinaikkan sedikit agar tidak hilang di layar HP */
+      }
+
+      .marquee-content {
+        display: flex;
+
+        width: max-content;
+
+        animation: runningPhotos 120s linear infinite;
+      }
+
+      @keyframes runningPhotos {
+        0% {
+          transform: translateX(0);
         }
 
-        .marquee-content {
-            display: flex;
-            width: max-content;
-            /* Durasi disesuaikan menjadi 120s karena barisan 24 foto sangat panjang agar jalannya tetap rileks */
-            animation: runningPhotos 120s linear infinite;
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* Jeda running saat kursor mouse menyentuh area latar */
+
+      .marquee-container:hover .marquee-content {
+        animation-play-state: paused;
+      }
+
+      /* --- LIGHT LEAK BOKEH & TEXT PULSE --- */
+
+      @keyframes floatBokeh-1 {
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
         }
 
-        @keyframes runningPhotos {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+        50% {
+          transform: translate(40px, -60px) scale(1.2);
+        }
+      }
+
+      @keyframes floatBokeh-2 {
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1.1);
         }
 
-        /* Jeda running saat kursor mouse menyentuh area latar */
-        .marquee-container:hover .marquee-content {
-            animation-play-state: paused;
+        50% {
+          transform: translate(-50px, 40px) scale(0.9);
+        }
+      }
+
+      .animate-bokeh-1 {
+        animation: floatBokeh-1 25s ease-in-out infinite;
+      }
+
+      .animate-bokeh-2 {
+        animation: floatBokeh-2 30s ease-in-out infinite;
+      }
+
+      @keyframes pulseText {
+        0%,
+        100% {
+          opacity: 0;
+          transform: scale(0.95);
         }
 
-        /* --- LIGHT LEAK BOKEH & TEXT PULSE --- */
-        @keyframes floatBokeh-1 {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(40px, -60px) scale(1.2); }
+        10%,
+        90% {
+          opacity: 0.04;
+          transform: scale(1);
         }
-        @keyframes floatBokeh-2 {
-            0%, 100% { transform: translate(0, 0) scale(1.1); }
-            50% { transform: translate(-50px, 40px) scale(0.9); }
-        }
-        .animate-bokeh-1 { animation: floatBokeh-1 25s ease-in-out infinite; }
-        .animate-bokeh-2 { animation: floatBokeh-2 30s ease-in-out infinite; }
+      }
 
-        @keyframes pulseText {
-            0%, 100% { opacity: 0; transform: scale(0.95); }
-            10%, 90% { opacity: 0.04; transform: scale(1); }
-        }
-        .bg-phrase { animation: pulseText 12s ease-in-out infinite; opacity: 0; }
+      .bg-phrase {
+        animation: pulseText 12s ease-in-out infinite;
+        opacity: 0;
+      }
     </style>
-</head>
-<body class="bg-zinc-950 text-zinc-100 h-screen overflow-hidden relative selection:bg-zinc-800 flex flex-col justify-between">
+  </head>
 
+  <body
+    class="bg-zinc-950 text-zinc-100 h-screen overflow-hidden relative selection:bg-zinc-800 flex flex-col justify-between"
+  >
     <!-- Audio Element -->
+
     <audio id="bg-music" loop>
-        <source src="music/monokrom.mp3" type="audio/mpeg">
+      <source src="music/monokrom.mp3" type="audio/mpeg" />
     </audio>
 
     <!-- 1. OVERLAY PEMBUKA -->
-    <div id="music-overlay" class="fixed inset-0 bg-zinc-950 z-50 flex flex-col items-center justify-center transition-opacity duration-1000">
-        <div class="text-center p-6 max-w-md">
-            <h2 class="serif text-3xl md:text-4xl mb-4 text-zinc-300 italic">"Lembaran foto hitam putih..."</h2>
-            <p class="text-zinc-500 text-xs mb-8 tracking-widest uppercase">Nyalakan suara untuk pengalaman penuh</p>
-            <button onclick="startCelebration()" class="px-8 py-3 border border-zinc-800 bg-zinc-900/50 text-zinc-300 hover:bg-zinc-100 hover:text-zinc-950 transition-all duration-500 rounded-full tracking-widest text-xs uppercase cursor-pointer backdrop-blur-sm">
-                Buka Lembaran Cerita
-            </button>
-        </div>
+
+    <div
+      id="music-overlay"
+      class="fixed inset-0 bg-zinc-950 z-50 flex flex-col items-center justify-center transition-opacity duration-1000"
+    >
+      <div class="text-center p-6 max-w-md">
+        <h2 class="serif text-3xl md:text-4xl mb-4 text-zinc-300 italic">
+          "Lembaran foto hitam putih..."
+        </h2>
+
+        <p class="text-zinc-500 text-xs mb-8 tracking-widest uppercase">
+          Nyalakan suara untuk pengalaman penuh
+        </p>
+
+        <button
+          onclick="startCelebration()"
+          class="px-8 py-3 border border-zinc-800 bg-zinc-900/50 text-zinc-300 hover:bg-zinc-100 hover:text-zinc-950 transition-all duration-500 rounded-full tracking-widest text-xs uppercase cursor-pointer backdrop-blur-sm"
+        >
+          Buka Lembaran Cerita
+        </button>
+      </div>
     </div>
 
     <!-- 2. BACKGROUND UTAMA -->
-    <div id="combined-bg" style="display: none;" class="absolute inset-0 z-0">
-        
-        <!-- ELEMENT BOKEH LIGHT LEAK -->
-        <div class="absolute inset-0 overflow-hidden pointer-events-none">
-            <div class="absolute top-[-10%] left-[-10%] w-[350px] md:w-[600px] h-[350px] md:h-[600px] bg-zinc-800/20 rounded-full filter blur-[80px] md:blur-[130px] animate-bokeh-1"></div>
-            <div class="absolute bottom-[-5%] right-[-5%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-zinc-700/10 rounded-full filter blur-[90px] md:blur-[120px] animate-bokeh-2"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-zinc-950 opacity-70"></div>
+
+    <div id="combined-bg" style="display: none" class="absolute inset-0 z-0">
+      <!-- ELEMENT BOKEH LIGHT LEAK -->
+
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          class="absolute top-[-10%] left-[-10%] w-[350px] md:w-[600px] h-[350px] md:h-[600px] bg-zinc-800/20 rounded-full filter blur-[80px] md:blur-[130px] animate-bokeh-1"
+        ></div>
+
+        <div
+          class="absolute bottom-[-5%] right-[-5%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-zinc-700/10 rounded-full filter blur-[90px] md:blur-[120px] animate-bokeh-2"
+        ></div>
+
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-zinc-950 opacity-70"
+        ></div>
+      </div>
+
+      <!-- ELEMENT TYPED LEGACY TEXT -->
+
+      <div
+        class="absolute inset-0 pointer-events-none select-none mono text-[10px] md:text-xs tracking-wider text-zinc-400"
+      >
+        <div
+          class="absolute top-[12%] left-[8%] bg-phrase"
+          style="animation-delay: 0s"
+        >
+          [ Aroma hujan di sore hari ]
         </div>
 
-        <!-- ELEMENT TYPED LEGACY TEXT -->
-        <div class="absolute inset-0 pointer-events-none select-none mono text-[10px] md:text-xs tracking-wider text-zinc-400">
-            <div class="absolute top-[12%] left-[8%] bg-phrase" style="animation-delay: 0s;">[ Aroma hujan di sore hari ]</div>
-            <div class="absolute top-[22%] right-[12%] bg-phrase" style="animation-delay: 3s;">[ Lagu favorit yang diputar berulang kali ]</div>
-            <div class="absolute bottom-[25%] left-[5%] bg-phrase" style="animation-delay: 6s;">[ Sudut kamar dan tumpukan buku ]</div>
-            <div class="absolute bottom-[15%] right-[10%] bg-phrase" style="animation-delay: 9s;">[ Secangkir kopi yang mulai mendingin ]</div>
+        <div
+          class="absolute top-[22%] right-[12%] bg-phrase"
+          style="animation-delay: 3s"
+        >
+          [ Lagu favorit yang diputar berulang kali ]
         </div>
 
-        <!-- ELEMENT POLAROID RUNNING WALL (24 Foto Utama + 24 Foto Duplikasi - Langsung diset flex) -->
-        <div id="surprise-marquee" class="marquee-container flex mix-blend-luminosity">
-            <div class="marquee-content space-x-8 px-4">
-                
-                <!-- === SET UTAMA (1-24) === -->
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-3 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (1).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 1</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-2 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (2).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 2</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-4 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (3).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 3</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-4 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (4).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 4</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-2 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (5).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 5</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-3 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (6).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 6</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-6 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (7).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 7</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-2 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (8).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 8</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-3 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (9).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 9</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-4 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (10).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 10</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-5 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (11).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 11</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-3 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (12).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 12</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-2 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (13).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 13</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-4 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (14).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 14</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-4 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (15).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 15</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-2 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (16).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 16</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-3 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (17).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 17</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-3 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (18).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 18</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-6 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (19).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 19</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-4 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (20).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 20</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-2 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (21).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 21</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-3 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (22).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 22</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-4 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (23).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 23</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-2 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer">
-                    <img src="images/foto1 (24).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 24</p>
-                </div>
-
-                <!-- === SET KLONING DUPLIKASI === -->
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-3 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (1).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 1</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-2 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (2).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 2</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-4 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (3).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 3</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-4 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (4).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 4</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-2 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (5).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 5</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-3 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (6).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 6</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-6 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (7).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 7</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-2 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (8).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 8</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-3 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (9).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 9</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-4 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (10).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 10</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-5 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (11).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 11</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-3 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (12).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 12</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-2 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (13).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 13</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-4 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (14).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 14</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-4 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (15).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 15</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-2 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (16).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 16</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-3 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (17).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 17</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-3 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (18).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 18</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-6 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (19).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 19</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-4 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (20).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 20</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-2 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (21).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 21</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-3 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (22).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 22</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform rotate-4 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (23).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 23</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-3 pb-8 rounded-sm shadow-2xl transform -rotate-2 w-44 md:w-52 flex-shrink-0 transition-transform duration-300 hover:scale-105 hover:rotate-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (24).jpeg" class="w-full h-36 md:h-44 object-cover filter grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-3 italic opacity-75">Lembaran 24</p>
-                </div>
-
-            </div>
+        <div
+          class="absolute bottom-[25%] left-[5%] bg-phrase"
+          style="animation-delay: 6s"
+        >
+          [ Sudut kamar dan tumpukan buku ]
         </div>
 
+        <div
+          class="absolute bottom-[15%] right-[10%] bg-phrase"
+          style="animation-delay: 9s"
+        >
+          [ Secangkir kopi yang mulai mendingin ]
+        </div>
+      </div>
+
+      <!-- ELEMENT POLAROID RUNNING WALL (Perbaikan Filter & Opacity untuk HP) -->
+
+      <div id="surprise-marquee" class="marquee-container flex">
+        <div class="marquee-content space-x-6 px-4">
+          <!-- === SET UTAMA (1-24) === -->
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-3 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (1).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 1
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-2 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (2).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 2
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-4 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (3).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 3
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-4 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (4).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 4
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-2 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (5).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 5
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-3 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (6).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 6
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-6 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (7).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 7
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-2 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (8).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 8
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-3 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (9).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 9
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-4 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (10).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 10
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-5 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (11).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 11
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-3 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (12).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 12
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-2 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (13).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 13
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-4 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (14).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 14
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-4 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (15).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 15
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-2 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (16).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 16
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-3 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (17).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 17
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-3 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (18).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 18
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-6 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (19).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 19
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-4 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (20).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 20
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-2 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (21).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 21
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-3 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (22).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 22
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-4 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (23).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 23
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-2 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+          >
+            <img
+              src="images/foto1 (24).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 24
+            </p>
+          </div>
+
+          <!-- === SET KLONING DUPLIKASI === -->
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-3 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (1).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 1
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-2 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (2).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 2
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-4 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (3).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 3
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-4 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (4).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 4
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-2 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (5).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 5
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-3 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (6).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 6
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-6 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (7).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 7
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-2 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (8).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 8
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-3 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (9).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 9
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-4 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (10).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 10
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-5 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (11).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 11
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-3 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (12).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 12
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-2 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (13).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 13
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-4 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (14).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 14
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-4 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (15).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 15
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-2 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (16).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 16
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-3 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (17).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 17
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-3 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (18).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 18
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-6 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (19).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 19
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-4 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (20).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 20
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-2 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (21).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 21
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-3 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (22).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 22
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-4 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (23).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 23
+            </p>
+          </div>
+
+          <div
+            class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-2 w-36 md:w-52 flex-shrink-0 cursor-pointer"
+            aria-hidden="true"
+          >
+            <img
+              src="images/foto1 (24).jpeg"
+              class="w-full h-28 md:h-44 object-cover grayscale brightness-90"
+            />
+
+            <p
+              class="serif text-center text-[10px] md:text-xs mt-2 italic opacity-75"
+            >
+              Lembaran 24
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- 3. KONTEN UTAMA LAYER -->
+
     <header class="p-6 md:p-8 flex justify-between items-center z-10 w-full">
-        <span class="serif text-xl font-bold tracking-wider opacity-40">HBD.</span>
-        <button id="music-toggle" onclick="toggleMusic()" class="hidden text-xs tracking-widest uppercase border border-zinc-800 bg-zinc-950/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-zinc-900 transition-all cursor-pointer">
-            🎵 Pause
-        </button>
+      <span class="serif text-xl font-bold tracking-wider opacity-40"
+        >HBD.</span
+      >
+
+      <button
+        id="music-toggle"
+        onclick="toggleMusic()"
+        class="hidden text-xs tracking-widest uppercase border border-zinc-800 bg-zinc-950/40 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-zinc-900 transition-all cursor-pointer"
+      >
+        🎵 Pause
+      </button>
     </header>
 
     <main class="flex-grow flex items-center justify-center px-4 z-10 w-full">
-        <div id="main-content" class="w-full max-w-xl text-center opacity-0 transition-opacity duration-1000 bg-zinc-950/70 p-6 md:p-10 rounded-2xl backdrop-blur-md border border-zinc-900/50 shadow-2xl mx-auto">
-            <p class="text-zinc-500 uppercase tracking-[0.25em] text-[10px] md:text-xs mb-3">A Milestone Journey</p>
-            
-            <h1 class="serif text-3xl md:text-5xl font-bold tracking-tight mb-6 leading-tight text-zinc-100 min-h-[70px] md:min-h-[120px]">
-                <span id="typing-text"></span><span class="animate-pulse font-light text-zinc-500">|</span>
-            </h1>
-            
-            <div class="w-10 h-[1px] bg-zinc-800 mx-auto mb-6"></div>
+      <div
+        id="main-content"
+        class="w-full max-w-xl text-center opacity-0 transition-opacity duration-1000 bg-zinc-950/70 p-6 md:p-10 rounded-2xl backdrop-blur-md border border-zinc-900/50 shadow-2xl mx-auto"
+      >
+        <p
+          class="text-zinc-500 uppercase tracking-[0.25em] text-[10px] md:text-xs mb-3"
+        >
+          A Milestone Journey
+        </p>
 
-            <div class="space-y-4 text-zinc-400 font-light leading-relaxed text-sm md:text-base text-justify md:text-center">
-                <p>
-                    Terima kasih sudah bertahan sejauh ini. Terima kasih tetap melangkah meski jalan tidak selalu mudah, dan tetap memilih untuk tumbuh di setiap keadaan.
-                </p>
-                <p>
-                    Hari ini adalah pembuktian bahwa kamu kuat. Semoga di usia yang baru ini, langkahmu makin mantap, hatimu makin lapang, dan setiap usaha yang kamu rakit bermuara pada bahagia. Kamu berharga, hari ini dan seterusnya.
-                </p>
-            </div>
+        <h1
+          class="serif text-3xl md:text-5xl font-bold tracking-tight mb-6 leading-tight text-zinc-100 min-h-[70px] md:min-h-[120px]"
+        >
+          <span id="typing-text"></span
+          ><span class="animate-pulse font-light text-zinc-500">|</span>
+        </h1>
 
-            <div class="mt-8">
-                <button onclick="makeWish()" class="text-[11px] tracking-widest uppercase text-zinc-500 hover:text-zinc-200 transition-colors duration-300 underline underline-offset-8 decoration-zinc-800 cursor-pointer">
-                    [ Tiup Lilin & Tulis Harapan ]
-                </button>
-                <p id="wish-display" class="mt-4 text-xs italic text-zinc-400 transition-all duration-500 max-w-sm mx-auto"></p>
-            </div>
+        <div class="w-10 h-[1px] bg-zinc-800 mx-auto mb-6"></div>
+
+        <div
+          class="space-y-4 text-zinc-400 font-light leading-relaxed text-sm md:text-base text-justify md:text-center"
+        >
+          <p>
+            Terima kasih sudah bertahan sejauh ini. Terima kasih tetap melangkah
+            meski jalan tidak selalu mudah, dan tetap memilih untuk tumbuh di
+            setiap keadaan.
+          </p>
+
+          <p>
+            Hari ini adalah pembuktian bahwa kamu kuat. Semoga di usia yang baru
+            ini, langkahmu makin mantap, hatimu makin lapang, dan setiap usaha
+            yang kamu rakit bermuara pada bahagia. Kamu berharga, hari ini dan
+            seterusnya.
+          </p>
         </div>
+
+        <div class="mt-8">
+          <button
+            onclick="makeWish()"
+            class="text-[11px] tracking-widest uppercase text-zinc-500 hover:text-zinc-200 transition-colors duration-300 underline underline-offset-8 decoration-zinc-800 cursor-pointer"
+          >
+            [ Tiup Lilin & Tulis Harapan ]
+          </button>
+
+          <p
+            id="wish-display"
+            class="mt-4 text-xs italic text-zinc-400 transition-all duration-500 max-w-sm mx-auto"
+          ></p>
+        </div>
+      </div>
     </main>
 
-    <footer class="p-6 text-center text-[10px] text-zinc-600 tracking-wider z-10 w-full">
-        Dibuat dengan bangga oleh & untuk diriku sendiri © 2026
+    <footer
+      class="p-6 text-center text-[10px] text-zinc-600 tracking-wider z-10 w-full"
+    >
+      Dibuat dengan bangga oleh & untuk diriku sendiri © 2026
     </footer>
 
     <!-- JavaScript -->
+
     <script>
-        const music = document.getElementById('bg-music');
-        const overlay = document.getElementById('music-overlay');
-        const content = document.getElementById('main-content');
-        const combinedBg = document.getElementById('combined-bg');
-        const toggleBtn = document.getElementById('music-toggle');
-        const surpriseMarquee = document.getElementById('surprise-marquee');
+      const music = document.getElementById("bg-music");
 
-        const titleString = "Selamat Ulang Tahun\nUntuk Diriku.";
-        let i = 0;
-        
-        function typeWriter() {
-            if (i < titleString.length) {
-                const char = titleString.charAt(i);
-                if (char === '\n') {
-                    document.getElementById("typing-text").innerHTML += "<br>";
-                } else {
-                    document.getElementById("typing-text").innerHTML += char;
-                }
-                i++;
-                setTimeout(typeWriter, 80);
-            }
-        }
+      const overlay = document.getElementById("music-overlay");
 
-        function startCelebration() {
-            music.play().catch(error => console.log("Playback diblokir browser:", error));
-            
-            overlay.classList.add('opacity-0');
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                
-                // LANGSUNG AKTIFKAN TOTAL LAYOUT BACKGROUND SAAT MUSIK MULAI
-                combinedBg.style.display = 'block'; 
-                surpriseMarquee.style.display = 'flex'; 
-                
-                content.classList.remove('opacity-0');
-                content.classList.add('fade-in');
-                toggleBtn.classList.remove('hidden');
-                typeWriter();
-            }, 1000);
-        }
+      const content = document.getElementById("main-content");
 
-        function toggleMusic() {
-            if (music.paused) {
-                music.play();
-                toggleBtn.innerText = "🎵 Pause";
-            } else {
-                music.pause();
-                toggleBtn.innerText = "🔇 Play";
-            }
-        }
+      const combinedBg = document.getElementById("combined-bg");
 
-        function makeWish() {
-            const wish = prompt("Tuliskan harapan terbesarmu untuk usia baru ini:");
-            const display = document.getElementById('wish-display');
-            if (wish) {
-                display.style.opacity = 0;
-                setTimeout(() => {
-                    display.innerText = `Harapanmu telah ditiupkan ke semesta: "${wish}" 🕯️✨`;
-                    display.style.opacity = 1;
-                }, 300);
-            }
+      const toggleBtn = document.getElementById("music-toggle");
+
+      const surpriseMarquee = document.getElementById("surprise-marquee");
+
+      const titleString = "Selamat Ulang Tahun\nUntuk Diriku.";
+
+      let i = 0;
+
+      function typeWriter() {
+        if (i < titleString.length) {
+          const char = titleString.charAt(i);
+
+          if (char === "\n") {
+            document.getElementById("typing-text").innerHTML += "<br>";
+          } else {
+            document.getElementById("typing-text").innerHTML += char;
+          }
+
+          i++;
+
+          setTimeout(typeWriter, 80);
         }
+      }
+
+      function startCelebration() {
+        music
+          .play()
+          .catch((error) => console.log("Playback diblokir browser:", error));
+
+        overlay.classList.add("opacity-0");
+
+        setTimeout(() => {
+          overlay.style.display = "none";
+
+          // LANGSUNG AKTIFKAN TOTAL LAYOUT BACKGROUND SAAT MUSIK MULAI
+
+          combinedBg.style.display = "block";
+
+          surpriseMarquee.style.display = "flex";
+
+          content.classList.remove("opacity-0");
+
+          content.classList.add("fade-in");
+
+          toggleBtn.classList.remove("hidden");
+
+          typeWriter();
+        }, 1000);
+      }
+
+      function toggleMusic() {
+        if (music.paused) {
+          music.play();
+
+          toggleBtn.innerText = "🎵 Pause";
+        } else {
+          music.pause();
+
+          toggleBtn.innerText = "🔇 Play";
+        }
+      }
+
+      function makeWish() {
+        const wish = prompt("Tuliskan harapan terbesarmu untuk usia baru ini:");
+
+        const display = document.getElementById("wish-display");
+
+        if (wish) {
+          display.style.opacity = 0;
+
+          setTimeout(() => {
+            display.innerText = `Harapanmu telah ditiupkan ke semesta: "${wish}" 🕯️✨`;
+
+            display.style.opacity = 1;
+          }, 300);
+        }
+      }
     </script>
-</body>
+  </body>
 </html>

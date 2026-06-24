@@ -103,7 +103,7 @@
             <div class="absolute bottom-[15%] right-[10%] bg-phrase" style="animation-delay: 9s;">[ Secangkir kopi yang mulai mendingin ]</div>
         </div>
 
-        <!-- ELEMENT POLAROID RUNNING WALL (Perbaikan Filter & Opacity untuk HP) -->
+        <!-- ELEMENT POLAROID RUNNING WALL -->
         <div id="surprise-marquee" class="marquee-container flex">
             <div class="marquee-content space-x-6 px-4">
                 
@@ -360,6 +360,9 @@
         const titleString = "Selamat Ulang Tahun\nUntuk Diriku.";
         let i = 0;
         
+        // Status internal melacak apakah perayaan sudah dibuka oleh user
+        let isCelebrationStarted = false;
+
         function typeWriter() {
             if (i < titleString.length) {
                 const char = titleString.charAt(i);
@@ -375,12 +378,12 @@
 
         function startCelebration() {
             music.play().catch(error => console.log("Playback diblokir browser:", error));
+            isCelebrationStarted = true;
             
             overlay.classList.add('opacity-0');
             setTimeout(() => {
                 overlay.style.display = 'none';
                 
-                // LANGSUNG AKTIFKAN TOTAL LAYOUT BACKGROUND SAAT MUSIK MULAI
                 combinedBg.style.display = 'block'; 
                 surpriseMarquee.style.display = 'flex'; 
                 
@@ -412,6 +415,22 @@
                 }, 300);
             }
         }
+
+        // --- LOGIKA MENDETEKSI PENGGUNA KELUAR/MINIMIZE WINDOW BROWSER ---
+        document.addEventListener('visibilitychange', () => {
+            // Kita hanya jalankan logika pause/play jika perayaan sudah resmi dimulai
+            if (isCelebrationStarted) {
+                if (document.hidden) {
+                    // Jika browser di-close/minimize/pindah tab, langsung jeda musik
+                    music.pause();
+                    toggleBtn.innerText = "🔇 Play";
+                } else {
+                    // Jika browser dibuka kembali, lanjutkan memutar musik
+                    music.play().catch(err => console.log("Gagal memutar ulang otomatis:", err));
+                    toggleBtn.innerText = "🎵 Pause";
+                }
+            }
+        });
     </script>
 </body>
 </html>

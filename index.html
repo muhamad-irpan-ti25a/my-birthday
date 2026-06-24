@@ -43,22 +43,16 @@
             -webkit-mask-image: linear-gradient(to right, transparent, white 15%, white 85%, transparent);
         }
 
-        /* KECEPATAN JALAN FOTO DIUBAH KE 40 DETIK (LEBIH CEPAT & DI-FIX AGAR TETAP JALAN DI HP) */
+        /* ANIMASI BERPUTAR MULUS TANPA HENTI & JEDA HOVER TELAH DIHAPUS TOTAL */
         .marquee-content {
             display: flex;
             width: max-content;
-            animation: runningPhotos 15s linear infinite !important;
+            animation: runningPhotos 60s linear infinite !important;
         }
 
         @keyframes runningPhotos {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* Jeda running saat kursor mouse menyentuh area */
-        .marquee-container-laptop:hover .marquee-content,
-        .marquee-container-hp:hover .marquee-content {
-            animation-play-state: paused;
+            100% { transform: translateX(-33.3333%); } /* Loop 3 bagian gelombang secara presisi */
         }
 
         /* --- LIGHT LEAK BOKEH & TEXT PULSE --- */
@@ -75,9 +69,13 @@
 
         @keyframes pulseText {
             0%, 100% { opacity: 0; transform: scale(0.95); }
-            10%, 90% { opacity: 0.04; transform: scale(1); }
+            10%, 90% { opacity: 0.40; transform: scale(1); }
         }
-        .bg-phrase { animation: pulseText 12s ease-in-out infinite; opacity: 0; }
+        .bg-phrase { 
+            animation: pulseText 12s ease-in-out infinite; 
+            opacity: 0; 
+            text-shadow: 0 0 10px rgba(0,0,0,0.8); 
+        }
     </style>
 </head>
 <body class="bg-zinc-950 text-zinc-100 h-screen overflow-hidden relative selection:bg-zinc-800 flex flex-col justify-between">
@@ -111,44 +109,91 @@
         <!-- ELEMENT TYPED LEGACY TEXT -->
         <div class="absolute inset-0 pointer-events-none select-none mono text-[10px] md:text-xs tracking-wider text-zinc-400">
             <div class="absolute top-[12%] left-[8%] bg-phrase" style="animation-delay: 0s;">[ Aroma hujan di sore hari ]</div>
-            <div class="absolute top-[22%] right-[12%] bg-phrase" style="animation-delay: 3s;">[ Lagu favorit yang diputar berulang kali ]</div>
+            <div class="absolute top-[22%] right-[6%] bg-phrase" style="animation-delay: 3s;">[ Lagu favorit yang diputar berulang kali ]</div>
             <div class="absolute bottom-[25%] left-[5%] bg-phrase" style="animation-delay: 6s;">[ Sudut kamar dan tumpukan buku ]</div>
             <div class="absolute bottom-[15%] right-[10%] bg-phrase" style="animation-delay: 9s;">[ Secangkir kopi yang mulai mendingin ]</div>
         </div>
 
-        <!-- LAPTOP ONLY MARQUEE WALL: Hanya muncul sebagai background melayang di laptop (md:flex) -->
+        <!-- LAPTOP ONLY MARQUEE WALL: Looping Mulus Beruntun 24 Foto x 3 Set -->
         <div id="surprise-marquee-laptop" class="hidden md:flex marquee-container-laptop">
-            <div class="marquee-content space-x-6 px-4">
-                <!-- Set Utama Laptop -->
-                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-3 w-52 flex-shrink-0 cursor-pointer">
-                    <img src="images/foto1 (1).jpeg" class="w-full h-44 object-cover grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-2 italic opacity-75">Lembaran 1</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-2 w-52 flex-shrink-0 cursor-pointer">
-                    <img src="images/foto1 (2).jpeg" class="w-full h-44 object-cover grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-2 italic opacity-75">Lembaran 2</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-4 w-52 flex-shrink-0 cursor-pointer">
-                    <img src="images/foto1 (3).jpeg" class="w-full h-44 object-cover grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-2 italic opacity-75">Lembaran 3</p>
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-4 w-52 flex-shrink-0 cursor-pointer">
-                    <img src="images/foto1 (4).jpeg" class="w-full h-44 object-cover grayscale brightness-90">
-                    <p class="serif text-center text-xs mt-2 italic opacity-75">Lembaran 4</p>
-                </div>
-                <!-- Set Duplikasi Laptop -->
-                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-3 w-52 flex-shrink-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (1).jpeg" class="w-full h-44 object-cover grayscale brightness-90">
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-2 w-52 flex-shrink-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (2).jpeg" class="w-full h-44 object-cover grayscale brightness-90">
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-4 w-52 flex-shrink-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (3).jpeg" class="w-full h-44 object-cover grayscale brightness-90">
-                </div>
-                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-4 w-52 flex-shrink-0 cursor-pointer" aria-hidden="true">
-                    <img src="images/foto1 (4).jpeg" class="w-full h-44 object-cover grayscale brightness-90">
-                </div>
+            <div class="marquee-content space-x-6 pr-6">
+                <!-- === LAPTOP: GELOMBANG UTAMA (1-24) === -->
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-3 w-52 flex-shrink-0"><img src="images/foto1 (1).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-2 w-52 flex-shrink-0"><img src="images/foto1 (2).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-4 w-52 flex-shrink-0"><img src="images/foto1 (3).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-4 w-52 flex-shrink-0"><img src="images/foto1 (4).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-2 w-52 flex-shrink-0"><img src="images/foto1 (5).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-3 w-52 flex-shrink-0"><img src="images/foto1 (6).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-6 w-52 flex-shrink-0"><img src="images/foto1 (7).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-2 w-52 flex-shrink-0"><img src="images/foto1 (8).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-3 w-52 flex-shrink-0"><img src="images/foto1 (9).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-4 w-52 flex-shrink-0"><img src="images/foto1 (10).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-5 w-52 flex-shrink-0"><img src="images/foto1 (11).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-3 w-52 flex-shrink-0"><img src="images/foto1 (12).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-2 w-52 flex-shrink-0"><img src="images/foto1 (13).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-4 w-52 flex-shrink-0"><img src="images/foto1 (14).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-4 w-52 flex-shrink-0"><img src="images/foto1 (15).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-2 w-52 flex-shrink-0"><img src="images/foto1 (16).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-3 w-52 flex-shrink-0"><img src="images/foto1 (17).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-3 w-52 flex-shrink-0"><img src="images/foto1 (18).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-6 w-52 flex-shrink-0"><img src="images/foto1 (19).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-4 w-52 flex-shrink-0"><img src="images/foto1 (20).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-2 w-52 flex-shrink-0"><img src="images/foto1 (21).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-3 w-52 flex-shrink-0"><img src="images/foto1 (22).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-4 w-52 flex-shrink-0"><img src="images/foto1 (23).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-2 w-52 flex-shrink-0"><img src="images/foto1 (24).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+
+                <!-- === LAPTOP: GELOMBANG SAMBUNGAN KEDUA (1-24) === -->
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-3 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (1).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-2 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (2).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-4 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (3).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-4 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (4).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-2 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (5).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-3 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (6).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-6 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (7).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-2 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (8).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-3 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (9).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-4 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (10).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-5 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (11).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-3 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (12).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-2 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (13).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-4 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (14).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-4 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (15).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-2 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (16).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-3 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (17).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-3 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (18).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-6 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (19).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-4 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (20).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-2 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (21).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-3 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (22).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-4 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (23).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-2 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (24).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+
+                <!-- === LAPTOP: GELOMBANG SAMBUNGAN KETIGA (1-24) === -->
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-3 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (1).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-2 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (2).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-4 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (3).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-4 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (4).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-2 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (5).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-3 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (6).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-6 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (7).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-2 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (8).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-3 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (9).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-4 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (10).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-5 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (11).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-3 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (12).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-2 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (13).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-4 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (14).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-4 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (15).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-2 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (16).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-3 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (17).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-3 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (18).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-6 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (19).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-4 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (20).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-2 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (21).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-3 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (22).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform rotate-4 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (23).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
+                <div class="bg-zinc-100 text-zinc-900 p-2 pb-6 rounded-sm shadow-xl transform -rotate-2 w-52 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (24).jpeg" class="w-full h-44 object-cover grayscale brightness-90"></div>
             </div>
         </div>
 
@@ -165,39 +210,90 @@
     <main class="flex-grow flex items-center justify-center px-4 z-10 w-full">
         <div id="main-content" class="w-full max-w-xl text-center opacity-0 transition-opacity duration-1000 bg-zinc-950/70 p-6 md:p-10 rounded-2xl backdrop-blur-md border border-zinc-900/50 shadow-2xl mx-auto">
             
-            <!-- HP ONLY MARQUEE WALL: Hanya muncul di atas form ucapan pada HP (block md:hidden) -->
+            <!-- HP ONLY MARQUEE WALL: Looping Rapat 24 Foto Kompleks Tanpa Jeda di HP -->
             <div id="surprise-marquee-hp" class="block md:hidden marquee-container-hp mb-6">
-                <div class="marquee-content space-x-4">
-                    <!-- Set Utama HP -->
-                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-2 w-28 flex-shrink-0">
-                        <img src="images/foto1 (1).jpeg" class="w-full h-20 object-cover grayscale brightness-95">
-                    </div>
-                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-1 w-28 flex-shrink-0">
-                        <img src="images/foto1 (2).jpeg" class="w-full h-20 object-cover grayscale brightness-95">
-                    </div>
-                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-3 w-28 flex-shrink-0">
-                        <img src="images/foto1 (3).jpeg" class="w-full h-20 object-cover grayscale brightness-95">
-                    </div>
-                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-2 w-28 flex-shrink-0">
-                        <img src="images/foto1 (4).jpeg" class="w-full h-20 object-cover grayscale brightness-95">
-                    </div>
-                    <!-- Set Duplikasi HP -->
-                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-2 w-28 flex-shrink-0" aria-hidden="true">
-                        <img src="images/foto1 (1).jpeg" class="w-full h-20 object-cover grayscale brightness-95">
-                    </div>
-                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-1 w-28 flex-shrink-0" aria-hidden="true">
-                        <img src="images/foto1 (2).jpeg" class="w-full h-20 object-cover grayscale brightness-95">
-                    </div>
-                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-3 w-28 flex-shrink-0" aria-hidden="true">
-                        <img src="images/foto1 (3).jpeg" class="w-full h-20 object-cover grayscale brightness-95">
-                    </div>
-                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-2 w-28 flex-shrink-0" aria-hidden="true">
-                        <img src="images/foto1 (4).jpeg" class="w-full h-20 object-cover grayscale brightness-95">
-                    </div>
+                <div class="marquee-content space-x-4 pr-4">
+                    <!-- === HP: GELOMBANG UTAMA (1-24) === -->
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-2 w-28 flex-shrink-0"><img src="images/foto1 (1).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-1 w-28 flex-shrink-0"><img src="images/foto1 (2).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-3 w-28 flex-shrink-0"><img src="images/foto1 (3).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-2 w-28 flex-shrink-0"><img src="images/foto1 (4).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-1 w-28 flex-shrink-0"><img src="images/foto1 (5).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-3 w-28 flex-shrink-0"><img src="images/foto1 (6).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-2 w-28 flex-shrink-0"><img src="images/foto1 (7).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-1 w-28 flex-shrink-0"><img src="images/foto1 (8).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-3 w-28 flex-shrink-0"><img src="images/foto1 (9).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-2 w-28 flex-shrink-0"><img src="images/foto1 (10).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-1 w-28 flex-shrink-0"><img src="images/foto1 (11).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-3 w-28 flex-shrink-0"><img src="images/foto1 (12).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-2 w-28 flex-shrink-0"><img src="images/foto1 (13).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-1 w-28 flex-shrink-0"><img src="images/foto1 (14).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-3 w-28 flex-shrink-0"><img src="images/foto1 (15).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-2 w-28 flex-shrink-0"><img src="images/foto1 (16).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-1 w-28 flex-shrink-0"><img src="images/foto1 (17).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-3 w-28 flex-shrink-0"><img src="images/foto1 (18).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-2 w-28 flex-shrink-0"><img src="images/foto1 (19).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-2 w-28 flex-shrink-0"><img src="images/foto1 (20).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-1 w-28 flex-shrink-0"><img src="images/foto1 (21).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-3 w-28 flex-shrink-0"><img src="images/foto1 (22).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-2 w-28 flex-shrink-0"><img src="images/foto1 (23).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-1 w-28 flex-shrink-0"><img src="images/foto1 (24).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    
+                    <!-- === HP: GELOMBANG SAMBUNGAN KEDUA (1-24) === -->
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-2 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (1).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-1 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (2).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-3 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (3).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-2 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (4).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-1 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (5).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-3 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (6).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-2 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (7).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-1 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (8).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-3 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (9).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-2 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (10).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-1 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (11).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-3 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (12).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-2 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (13).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-1 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (14).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-3 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (15).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-2 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (16).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-1 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (17).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-3 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (18).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-2 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (19).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-2 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (20).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-1 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (21).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-3 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (22).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-2 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (23).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-1 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (24).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+
+                    <!-- === HP: GELOMBANG SAMBUNGAN KETIGA (1-24) === -->
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-2 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (1).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-1 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (2).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-3 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (3).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-2 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (4).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-1 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (5).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-3 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (6).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-2 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (7).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-1 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (8).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-3 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (9).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-2 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (10).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-1 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (11).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-3 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (12).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-2 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (13).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-1 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (14).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-3 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (15).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-2 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (16).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-1 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (17).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-3 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (18).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-2 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (19).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-2 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (20).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-1 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (21).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-3 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (22).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform rotate-2 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (23).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
+                    <div class="bg-zinc-100 text-zinc-900 p-1.5 pb-4 rounded-sm shadow-md transform -rotate-1 w-28 flex-shrink-0" aria-hidden="true"><img src="images/foto1 (24).jpeg" class="w-full h-20 object-cover grayscale brightness-95"></div>
                 </div>
             </div>
 
-            <!-- TEKS FORM UTAMA (DIPASTIKAN KLAS-NYA PERSIS SEPERTI LAYOUT ASALMU) -->
+            <!-- TEKS FORM UTAMA -->
             <p class="text-zinc-500 uppercase tracking-[0.25em] text-[10px] md:text-xs mb-3">A Milestone Journey</p>
             
             <h1 class="serif text-3xl md:text-5xl font-bold tracking-tight mb-6 leading-tight text-zinc-100 min-h-[70px] md:min-h-[120px]">
@@ -291,7 +387,6 @@
             }
         }
 
-        // JEDA OTOMATIS BROWSER CLOSE/TAB OUT
         document.addEventListener('visibilitychange', () => {
             if (isCelebrationStarted) {
                 if (document.hidden) {
